@@ -39,7 +39,7 @@
       }
     }).state('Monitor', {
       parent: 'site',
-      url: '/',
+      url: '/monitor',
       data: {
         roles: []
       },
@@ -55,7 +55,7 @@
       }
     }).state('Control', {
       parent: 'site',
-      url: '/',
+      url: '/control',
       data: {
         roles: []
       },
@@ -71,7 +71,7 @@
       }
     }).state('Lamps Settings', {
       parent: 'site',
-      url: '/',
+      url: '/lampsettings',
       data: {
         roles: []
       },
