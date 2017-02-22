@@ -1,0 +1,251 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: 0;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+
+  p + h4 {
+    margin-top: 28px;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+/*
+ * Skin: Black
+ * -----------
+ */
+/* skin-black navbar */
+.skin-black .main-header {
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+.skin-black .main-header .navbar-toggle {
+  color: #333;
+}
+.skin-black .main-header .navbar-brand {
+  color: #333;
+  border-right: 1px solid #eee;
+}
+.skin-black .main-header .navbar {
+  background-color: #ffffff;
+}
+.skin-black .main-header .navbar .nav > li > a {
+  color: #333333;
+}
+.skin-black .main-header .navbar .nav > li > a:hover,
+.skin-black .main-header .navbar .nav > li > a:active,
+.skin-black .main-header .navbar .nav > li > a:focus,
+.skin-black .main-header .navbar .nav .open > a,
+.skin-black .main-header .navbar .nav .open > a:hover,
+.skin-black .main-header .navbar .nav .open > a:focus,
+.skin-black .main-header .navbar .nav > .active > a {
+  background: #ffffff;
+  color: #999999;
+}
+.skin-black .main-header .navbar .sidebar-toggle {
+  color: #333333;
+}
+.skin-black .main-header .navbar .sidebar-toggle:hover {
+  color: #999999;
+  background: #ffffff;
+}
+.skin-black .main-header .navbar > .sidebar-toggle {
+  color: #333;
+  border-right: 1px solid #eee;
+}
+.skin-black .main-header .navbar .navbar-nav > li > a {
+  border-right: 1px solid #eee;
+}
+.skin-black .main-header .navbar .navbar-custom-menu .navbar-nav > li > a,
+.skin-black .main-header .navbar .navbar-right > li > a {
+  border-left: 1px solid #eee;
+  border-right-width: 0;
+}
+.skin-black .main-header > .logo {
+  background-color: #ffffff;
+  color: #333333;
+  border-bottom: 0 solid transparent;
+  border-right: 1px solid #eee;
+}
+.skin-black .main-header > .logo:hover {
+  background-color: #fcfcfc;
+}
+@media (max-width: 767px) {
+  .skin-black .main-header > .logo {
+    background-color: #222222;
+    color: #ffffff;
+    border-bottom: 0 solid transparent;
+    border-right: none;
+  }
+  .skin-black .main-header > .logo:hover {
+    background-color: #1f1f1f;
+  }
+}
+.skin-black .main-header li.user-header {
+  background-color: #222;
+}
+.skin-black .content-header {
+  background: transparent;
+  box-shadow: none;
+}
+.skin-black .wrapper,
+.skin-black .main-sidebar,
+.skin-black .left-side {
+  background-color: #000000;
+}
+.skin-black .user-panel > .info,
+.skin-black .user-panel > .info > a {
+  color: #fff;
+}
+.skin-black .sidebar-menu > li.header {
+  color: #4b646f;
+  background: #000000;
+}
+.skin-black .sidebar-menu > li > a {
+  border-left: 3px solid transparent;
+}
+.skin-black .sidebar-menu > li:hover > a,
+.skin-black .sidebar-menu > li.active > a {
+  color: #ffffff;
+  background: #1e282c;
+  border-left-color: #ffffff;
+}
+.skin-black .sidebar-menu > li > .treeview-menu {
+  margin: 0 1px;
+  background: #2c3b41;
+}
+.skin-black .sidebar a {
+  color: #b8c7ce;
+}
+.skin-black .sidebar a:hover {
+  text-decoration: none;
+}
+.skin-black .treeview-menu > li > a {
+  color: #8aa4af;
+}
+.skin-black .treeview-menu > li.active > a,
+.skin-black .treeview-menu > li > a:hover {
+  color: #ffffff;
+}
+.skin-black .sidebar-form {
+  border-radius: 3px;
+  border: 1px solid #374850;
+  margin: 10px 10px;
+}
+.skin-black .sidebar-form input[type="text"],
+.skin-black .sidebar-form .btn {
+  box-shadow: none;
+  background-color: #374850;
+  border: 1px solid transparent;
+  height: 35px;
+}
+.skin-black .sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+}
+.skin-black .sidebar-form input[type="text"]:focus,
+.skin-black .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: #fff;
+  color: #666;
+}
+.skin-black .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  border-left-color: #fff;
+}
+.skin-black .sidebar-form .btn {
+  color: #999;
+  border-top-left-radius: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 0;
+}
+.skin-black .pace .pace-progress {
+  background: #222;
+}
+.skin-black .pace .pace-activity {
+  border-top-color: #222;
+  border-left-color: #222;
+}
+
