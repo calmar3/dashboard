@@ -16,5 +16,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'angular-flot'
+    'angular-flot',
+    'ngMap',
+    'bw.paging'
   ]);

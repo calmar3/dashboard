@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var ControlCtrl = ['$scope', '$rootScope', '$compile', function ($scope, $rootScope, $compile) {
+  var ControlCtrl = ['$scope', '$rootScope', '$compile','NgMap', function ($scope, $rootScope, $compile,NgMap) {
 
     var ctrl = this;
 
@@ -9,6 +9,30 @@
 
     ctrl.update = true;
 
+
+      NgMap.getMap().then(function(map) {
+          console.log('map', map);
+          ctrl.map = map;
+      });
+
+      ctrl.clicked = function() {
+          alert('Clicked a link inside infoWindow');
+      };
+
+      ctrl.shops = [
+          {id:'foo', name: 'Via dei Fori Imperiali', position:[41.8933281,12.4848003]},
+          {id:'bar', name: 'Via di San Giovanni in Laterano', position:[41.8889431,12.4959199]}
+      ];
+      ctrl.shop = ctrl.shops[0];
+
+      ctrl.showDetail = function(e, shop) {
+          ctrl.shop = shop;
+          ctrl.map.showInfoWindow('foo-iw', shop.id);
+      };
+
+      ctrl.hideDetail = function() {
+          ctrl.map.hideInfoWindow('foo-iw');
+      };
 
     function switchFn() {
         ctrl.update = !ctrl.update;
@@ -23,6 +47,8 @@
     ctrl.totalPoints = 100;
 
     ctrl.updateInterval = 500;
+
+    ctrl.currentPage = 1;
 
     ctrl.data = [];
 
@@ -101,7 +127,7 @@
 
   }];
 
-  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile'];
+  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile','NgMap'];
 
   angular.module('monitoringDashboardApp').controller('ControlCtrl', ControlCtrl);
 
