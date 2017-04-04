@@ -1,0 +1,186 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-danger" ng-if="ctrl.mode === 'delete'">
+            <div class="box-header with-border">
+                <h3 class="box-title">Delete Lamp</h3>
+            </div>
+            <!-- /.box-header -->
+
+            <div class="box-body">
+                <h4>You are going to delete this Lamp:</h4>
+                <ul>
+                    <li><b>Id</b>: {{ctrl.selected.id}}</li>
+                    <li><b>Model</b>: {{ctrl.selected.model}}</li>
+                    <li><b>Address</b>: {{ctrl.selected.location.address}}</li>
+                    <li><b>Latitude</b>: {{ctrl.selected.location.gps_coordinate.latitude}}</li>
+                    <li><b>Longitude</b>: {{ctrl.selected.location.gps_coordinate.longitude}}</li>
+                    <li><b>Power Consumption</b>: {{ctrl.selected.power_consumption}}%</li>
+                    <li><b>Light Intensity</b>: {{ctrl.selected.light_intensity}}%</li>
+                    <li><b>Substitution Date</b>: {{ctrl.selected.substitution_date}}</li>
+                    <li><b>State</b>: <span ng-if="ctrl.selected.state_on">On</span><span ng-if="!ctrl.selected.state_on">Off</span></li>
+                </ul>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 ">
+                        <button class="btn btn-flat btn-warning pull-right" style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-click="ctrl.switchMode(null)" uib-tooltip="Go Back">Back <span class="fa fa-undo"></span></button>
+                        <button ng-disabled = "ctrl.selected === null" class="btn btn-flat btn-danger pull-right" style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-click="ctrl.deleteLamp()" uib-tooltip="Delete Selected Lamps">Delete <span class="fa fa-trash"></span></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-success" ng-if="ctrl.mode === 'add'">
+            <div class="box-header">
+                <h3 class="box-title">Add Lamp</h3>
+            </div>
+            <!-- /.box-header -->
+
+            <div class="box-body">
+                <h4>Insert new Lamp data:</h4>
+                <form role="form">
+                    <!-- text input -->
+                    <div class="row">
+                        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
+                            <div class="form-group">
+                                <div class="col-xs-2" style="height:34px; padding-top:1%; padding-right: 0px;">
+                                    <label class="control-label pull-right">Id</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" placeholder="Id" ng-model="ctrl.newLamp.id">
+                                </div>
+                            </div><br><br>
+                            <div class="form-group">
+                                <div class="col-xs-2" style="height:34px; padding-top:1%; padding-right: 0px;">
+                                    <label class="control-label pull-right">Model</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" placeholder="Model"  ng-model="ctrl.newLamp.model">
+                                </div>
+                            </div><br><br>
+                            <div class="form-group">
+                                <div class="col-xs-2" style="height:34px; padding-top:1%; padding-right: 0px;">
+                                    <label class="control-label pull-right">Address</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" placeholder="Address"  ng-model="ctrl.newLamp.location.address">
+                                </div>
+                            </div><br><br>
+                            <div class="form-group">
+                                <div class="col-xs-2" style="height:34px; padding-top:1%; padding-right: 0px;">
+                                    <label class="control-label pull-right">Latitude</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" placeholder="Latitude"  ng-model="ctrl.newLamp.location.gps_coordinate.latitude">
+                                </div>
+                            </div><br><br>
+                            <div class="form-group">
+                                <div class="col-xs-2" style="height:34px; padding-top:1%; padding-right: 0px;">
+                                    <label class="control-label pull-right">Longitude</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" placeholder="Longitude"  ng-model="ctrl.newLamp.location.gps_coordinate.longitude">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 ">
+                        <button class="btn btn-flat btn-warning pull-right" style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-click="ctrl.switchMode(null)" uib-tooltip="Go Back">Back <span class="fa fa-undo"></span></button>
+                        <button class="btn btn-flat btn-success pull-right" style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-class="{'disabled': !ctrl.validateForm() }" ng-click="ctrl.addLamp()" uib-tooltip="Save added Lamp">Save <span class="fa fa-save"></span></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-danger" ng-show="!ctrl.mode">
+            <div class="box-header">
+                <h3 class="box-title">Lamps Table</h3>
+                <hr >
+                <div class="row" >
+                    <div class="col-xs-6 col-md-6 col-lg-6"><label>Select </label>
+                        <select style="width:50px;height:30px;display:inline;"
+                                ng-options="entry for entry in ctrl.entries"
+                                ng-model="ctrl.show">
+                        </select>
+                        <label> entries</label>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-lg-6"><span class="pull-right"><input ng-model="ctrl.searchText" placeholder="Search..."  ></span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-xs-12 col-md-6 col-lg-6 ">
+                        <button class="btn btn-flat btn-success " style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-click="ctrl.switchMode('add')" uib-tooltip="Add New Lamp">New <span class="fa fa-plus"></span></button>
+                        <button ng-disabled = "ctrl.selected === null" class="btn btn-flat btn-danger " style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-click="ctrl.switchMode('delete')" uib-tooltip="Delete Selected Lamps">Delete <span class="fa fa-trash"></span></button>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!-- /.box-header -->
+
+            <div class="box-body">
+                <table class="table table-bordered" >
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Location</th>
+                        <th>Model</th>
+                        <th>Power Consumption</th>
+                        <th>State</th>
+                        <th>Ligh Intensity</th>
+                        <th>Substitution Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="cursor:pointer;" ng-repeat="lamp in ctrl.dataset | filter:ctrl.searchFilter | limitTo: ctrl.show" ng-class="{'selected': ctrl.selected === lamp}"
+                        ng-click="ctrl.select(lamp)" >
+                        <td>{{lamp.id}}</td>
+                        <td>{{lamp.location.address}}, &lt;{{lamp.location.gps_coordinate.latitude}},{{lamp.location.gps_coordinate.longitude}}&gt;</td>
+                        <td>{{lamp.model}}</td>
+                        <td>{{lamp.power_consumption}}%</td>
+                        <td ng-if="lamp.state_on">On</td>
+                        <td ng-if="!lamp.state_on">Off</td>
+                        <td>{{lamp.light_intensity}}%</td>
+                        <td>{{lamp.substitution_date}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-lg-5">
+                        Showing {{ctrl.shift+1}} to {{ctrl.shift+ctrl.show}} of {{ctrl.data.length}} entries
+                    </div>
+                    <div class="col-lg-7">
+                <span class="pull-right">
+          <div paging
+               page="ctrl.currentPage"
+               page-size="ctrl.show"
+               total="ctrl.data.length"
+               paging-action="ctrl.pagingAction(page, pageSize)">
+          </div>
+        </span>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

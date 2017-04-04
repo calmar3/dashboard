@@ -18,5 +18,6 @@ angular
     'ui.router',
     'angular-flot',
     'ngMap',
-    'bw.paging'
+    'bw.paging',
+      'ui.bootstrap'
   ]);
