@@ -1,24 +1,25 @@
-<div class="row">
-    <div class="col-lg-12">
-        <div class="box box-danger" ng-if="ctrl.mode === 'delete'">
+<!-- Delete Mode-->
+<div class="row" ng-if="ctrl.mode === 'delete'">
+    <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offsest-2 col-xs-12">
+        <div class="box box-danger" >
             <div class="box-header with-border">
                 <h3 class="box-title">Delete Lamp</h3>
             </div>
-            <!-- /.box-header -->
-
             <div class="box-body">
                 <h4>You are going to delete this Lamp:</h4>
-                <ul>
-                    <li><b>Id</b>: {{ctrl.selected.id}}</li>
-                    <li><b>Model</b>: {{ctrl.selected.model}}</li>
-                    <li><b>Address</b>: {{ctrl.selected.location.address}}</li>
-                    <li><b>Latitude</b>: {{ctrl.selected.location.gps_coordinate.latitude}}</li>
-                    <li><b>Longitude</b>: {{ctrl.selected.location.gps_coordinate.longitude}}</li>
-                    <li><b>Power Consumption</b>: {{ctrl.selected.power_consumption}}%</li>
-                    <li><b>Light Intensity</b>: {{ctrl.selected.light_intensity}}%</li>
-                    <li><b>Substitution Date</b>: {{ctrl.selected.substitution_date}}</li>
-                    <li><b>State</b>: <span ng-if="ctrl.selected.state_on">On</span><span ng-if="!ctrl.selected.state_on">Off</span></li>
-                </ul>
+                <div class="col-xs-8 col-xs-offset-2">
+                      <ul>
+                        <li><b>Id</b>: {{ctrl.selected.id}}</li>
+                        <li><b>Model</b>: {{ctrl.selected.model}}</li>
+                        <li><b>Address</b>: {{ctrl.selected.location.address}}</li>
+                        <li><b>Latitude</b>: {{ctrl.selected.location.gps_coordinate.latitude}}</li>
+                        <li><b>Longitude</b>: {{ctrl.selected.location.gps_coordinate.longitude}}</li>
+                        <li><b>Power Consumption</b>: {{ctrl.selected.power_consumption}}%</li>
+                        <li><b>Light Intensity</b>: {{ctrl.selected.light_intensity}}%</li>
+                        <li><b>Substitution Date</b>: {{ctrl.selected.substitution_date}}</li>
+                        <li><b>State</b>: <span ng-if="ctrl.selected.state_on">On</span><span ng-if="!ctrl.selected.state_on">Off</span></li>
+                      </ul>
+                </div>
             </div>
             <div class="box-footer">
                 <div class="row">
@@ -32,8 +33,15 @@
                 </div>
             </div>
         </div>
-        <div class="box box-success" ng-if="ctrl.mode === 'add'">
-            <div class="box-header">
+    </div>
+</div>
+
+
+<!-- Add Mode-->
+<div class="row" ng-if="ctrl.mode === 'add'">
+    <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offsest-2 col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
                 <h3 class="box-title">Add Lamp</h3>
             </div>
             <!-- /.box-header -->
@@ -100,48 +108,52 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
         <div class="box box-danger" ng-show="!ctrl.mode">
-            <div class="box-header">
+            <div class="box-header with-border">
+                <i class="fa fa-table"></i>
                 <h3 class="box-title">Lamps Table</h3>
-                <hr >
-                <div class="row" >
-                    <div class="col-xs-6 col-md-6 col-lg-6"><label>Select </label>
-                        <select style="width:50px;height:30px;display:inline;"
-                                ng-options="entry for entry in ctrl.entries"
-                                ng-model="ctrl.show">
-                        </select>
-                        <label> entries</label>
-                    </div>
-                    <div class="col-xs-6 col-md-6 col-lg-6"><span class="pull-right"><input ng-model="ctrl.searchText" placeholder="Search..."  ></span>
-                    </div>
-                </div>
-                <hr>
-                <div class="row" style="margin-top: 5px;">
-                    <div class="col-xs-12 col-md-6 col-lg-6 ">
-                        <button class="btn btn-flat btn-success " style="margin-bottom:5px;margin-right:5px"
-                                tooltip-append-to-body="true" ng-click="ctrl.switchMode('add')" uib-tooltip="Add New Lamp">New <span class="fa fa-plus"></span></button>
-                        <button ng-disabled = "ctrl.selected === null" class="btn btn-flat btn-danger " style="margin-bottom:5px;margin-right:5px"
-                                tooltip-append-to-body="true" ng-click="ctrl.switchMode('delete')" uib-tooltip="Delete Selected Lamps">Delete <span class="fa fa-trash"></span></button>
-
-                    </div>
-                </div>
-
-
-
             </div>
             <!-- /.box-header -->
 
             <div class="box-body">
-                <table class="table table-bordered" >
+                <div class="alert alert-warning alert-dismissible" ng-show="!ctrl.clicked">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="icon fa fa-info"></i>Click on item to enable Delete Button
+                </div>
+                <div class="row" >
+                    <div class="col-xs-6 col-md-6 col-lg-6"><label>Entries: </label>
+                        <select style="width:50px;height:30px;display:inline;"
+                                ng-options="entry for entry in ctrl.entries"
+                                ng-model="ctrl.show">
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-lg-6"><span class="pull-right"><input ng-model="ctrl.searchText" placeholder="Search..."  ></span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 ">
+                       <button ng-disabled = "ctrl.selected === null" class="btn btn-xs btn-flat btn-danger pull-right" style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-click="ctrl.switchMode('delete')" uib-tooltip="Delete Selected Lamps">Delete <span class="fa fa-trash"></span></button>
+                        <button class="btn btn-xs btn-flat btn-success pull-right" style="margin-bottom:5px;margin-right:5px"
+                                tooltip-append-to-body="true" ng-click="ctrl.switchMode('add')" uib-tooltip="Add New Lamp">New <span class="fa fa-plus"></span></button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-condensed ">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th style="text-align: center">Id</th>
                         <th>Location</th>
-                        <th>Model</th>
-                        <th>Power Consumption</th>
-                        <th>State</th>
-                        <th>Ligh Intensity</th>
-                        <th>Substitution Date</th>
+                        <th style="text-align: center">Model</th>
+                        <th style="text-align: center">Power Cons.</th>
+                        <th style="text-align: center">State</th>
+                        <th style="text-align: center">Light Int.</th>
+                        <th style="text-align: center">Sub. Date</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -149,22 +161,23 @@
                         ng-click="ctrl.select(lamp)" >
                         <td>{{lamp.id}}</td>
                         <td>{{lamp.location.address}}, &lt;{{lamp.location.gps_coordinate.latitude}},{{lamp.location.gps_coordinate.longitude}}&gt;</td>
-                        <td>{{lamp.model}}</td>
-                        <td>{{lamp.power_consumption}}%</td>
-                        <td ng-if="lamp.state_on">On</td>
-                        <td ng-if="!lamp.state_on">Off</td>
-                        <td>{{lamp.light_intensity}}%</td>
-                        <td>{{lamp.substitution_date}}</td>
+                        <td style="text-align: center">{{lamp.model}}</td>
+                        <td style="text-align: center">{{lamp.power_consumption}}%</td>
+                        <td ng-if="lamp.state_on" style="text-align: center">On</td>
+                        <td ng-if="!lamp.state_on" style="text-align: center">Off</td>
+                        <td style="text-align: center">{{lamp.light_intensity}}%</td>
+                        <td style="text-align: center">{{lamp.substitution_date}}</td>
                     </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
             <div class="box-footer">
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 col-xs-12">
                         Showing {{ctrl.shift+1}} to {{ctrl.shift+ctrl.show}} of {{ctrl.data.length}} entries
                     </div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-7 col-xs-12">
                 <span class="pull-right">
           <div paging
                page="ctrl.currentPage"

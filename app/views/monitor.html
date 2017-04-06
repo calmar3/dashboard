@@ -1,74 +1,145 @@
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-7 col-md-12 col-xs-12">
   <div class="box box-danger">
-    <div class="box-header">
-      <h3 class="box-title">Lamps Table</h3>
-      <hr>
-      <div class="row">
-        <div class="col-xs-6"><label>Select </label>
-
-          <select style="width:50px;height:30px;display:inline;"
-                  ng-options="entry for entry in ctrl.entries"
-                  ng-model="ctrl.show">
-          </select>
-
-
-        <label> entries</label></div>
-        <div class="col-lg-6"><span class="pull-right"><input ng-model="ctrl.searchText" placeholder="Search..." ></span></div>
-      </div>
+    <div class="box-header with-border">
+      <i class="fa fa-table"></i>
+      <h3 class="box-title">Residual Lifetime Rank</h3>
     </div>
     <!-- /.box-header -->
 
       <div class="box-body">
-        <table class="table table-bordered">
+        <div class="table-responsive">
+        <table class="table table-striped table-condensed table-hover ">
           <thead>
           <tr>
             <th>Id</th>
             <th>Location</th>
             <th>Model</th>
-            <th>Power Consumption</th>
+            <th>Power Cons.</th>
             <th>State</th>
-            <th>Ligh Intensity</th>
-            <th>Substitution Date</th>
+            <th>Light Int.</th>
+            <th>Sub. Date</th>
           </tr>
           </thead>
           <tbody>
-          <tr style="cursor:pointer;" ng-repeat="lamp in ctrl.dataset | filter:ctrl.searchFilter | limitTo: ctrl.show" ng-class="{'selected': ctrl.selected.indexOf($index) > -1}"
-          ng-click="ctrl.select($index)">
+          <tr  ng-repeat="lamp in ctrl.rankData">
             <td>{{lamp.id}}</td>
             <td>{{lamp.location.address}}, &lt;{{lamp.location.gps_coordinate.latitude}},{{lamp.location.gps_coordinate.longitude}}&gt;</td>
-            <td>{{lamp.model}}</td>
-            <td>{{lamp.power_consumption}}%</td>
-            <td ng-if="lamp.state_on">On</td>
-            <td ng-if="!lamp.state_on">Off</td>
-            <td>{{lamp.light_intensity}}%</td>
-            <td>{{lamp.substitution_date}}</td>
+            <td style="text-align: center">{{lamp.model}}</td>
+            <td style="text-align: center">{{lamp.power_consumption}}%</td>
+            <td ng-if="lamp.state_on" style="text-align: center">On</td>
+            <td ng-if="!lamp.state_on" style="text-align: center">Off</td>
+            <td style="text-align: center">{{lamp.light_intensity}}%</td>
+            <td style="text-align: center">{{lamp.substitution_date}}</td>
           </tr>
           </tbody>
         </table>
       </div>
-    <div class="box-footer">
-      <div class="row">
-        <div class="col-lg-5">
-          Showing {{ctrl.shift+1}} to {{ctrl.shift+ctrl.show}} of {{ctrl.data.length}} entries
-        </div>
-        <div class="col-lg-7">
-                <span class="pull-right">
-          <div paging
-               page="ctrl.currentPage"
-               page-size="ctrl.show"
-               total="ctrl.data.length"
-               paging-action="ctrl.pagingAction(page, pageSize)">
-          </div>
-        </span>
-
-        </div>
-
       </div>
+    <div class="box-footer">
     </div>
     </div>
   </div>
 
 
+
+  <div class="col-lg-5 col-md-12 col-xs-12">
+
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <i class="fa fa-map"></i>
+
+        <h3 class="box-title">Lamps Map</h3>
+
+      </div>
+      <div class="box-body">
+        <div map-lazy-load="https://maps.google.com/maps/api/js">
+
+
+          <ng-map default-style="true" center="41.9100711,12.5359979" zoom="12">
+            <marker id='{{shop.id}}' position="{{shop.position}}"
+                    ng-repeat="shop in ctrl.shops"
+                    on-click="ctrl.showDetail(shop)">
+            </marker>
+
+            <info-window id="foo-iw">
+              <div ng-non-bindable="">
+                id: {{ctrl.shop.id}}<br/>
+                name: {{ctrl.shop.name}}<br/>
+                Position 1: {{ctrl.shop.position}}<br/>
+                Position 2: {{anchor.getPosition()}}<br/>
+                Position 3: {{ctrl.map.markers[ctrl.shop.id].getPosition()}}<br/>
+                <a href="#" ng-click="ctrl.clicked()">Click Here</a>
+              </div>
+            </info-window>
+          </ng-map>
+        </div>
+      </div>
+      <div class="box-footer">
+        <button class="btn btn-xs btn-flat btn-danger pull-right" ng-click="ctrl.showDetail(e, ctrl.shop)" style="margin-left:5px;">
+          Show
+        </button>
+        <button class="btn btn-xs btn-flat btn-danger pull-right" ng-click="ctrl.hideDetail(e, ctrl.shop)">
+          Hide
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+
+
 </div>
+
+<div class="row">
+  <div class="col-lg-12">
+
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            <i class="fa fa-area-chart"></i>
+            <h3 class="box-title">Real-Time Consumption Chart</h3>
+          </div>
+          <div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
+            <div class="box-tools pull-right">
+              Real time
+              <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                <button type="button" class="btn btn-default btn-xs " ng-class="{'active':ctrl.update}" ng-click="ctrl.switch()">On</button>
+                <button type="button" class="btn btn-default btn-xs" ng-class="{'active':!ctrl.update}" ng-click="ctrl.switch()">Off</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box-body">
+        <div style="height: 300px; padding: 0px; position: relative;">
+          <flot dataset="ctrl.dataset" options="ctrl.options"></flot>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<div class="row">
+
+
+
+</div>
+
+<script>$('flot > div');</script>
+
+<!-- jQuery 2.2.3 -->
+<script src="../../scripts/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- FLOT CHARTS -->
+<script src="../../scripts/plugins/flot/jquery.flot.min.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="../../scripts/plugins/flot/jquery.flot.resize.min.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="../../scripts/plugins/flot/jquery.flot.pie.min.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="../../scripts/plugins/flot/jquery.flot.categories.min.js"></script>
+
 

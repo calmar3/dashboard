@@ -9,6 +9,8 @@
 
       ctrl.searchText="";
 
+      ctrl.clicked = false;
+
       ctrl.show=10;
 
       ctrl.data =[];
@@ -58,6 +60,7 @@
       }
 
       function selectFn(lamp) {
+          ctrl.clicked = true;
           if (ctrl.selected === lamp)
             ctrl.selected = null;
           else if (ctrl.selected === null)
@@ -99,7 +102,7 @@
           ctrl.data.push(lamp);
       }
 
-      ctrl.dataset = ctrl.data;
+      ctrl.dataset = ctrl.data.slice(0);
 
 
       function searchFilterFn(item) {
