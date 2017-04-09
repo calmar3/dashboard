@@ -19,5 +19,6 @@ angular
     'angular-flot',
     'ngMap',
     'bw.paging',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'btford.socket-io'
   ]);

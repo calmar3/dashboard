@@ -1,12 +1,13 @@
 (function () {
   'use strict';
 
-  var MonitorCtrl = ['$scope', '$rootScope', '$compile','NgMap', function ($scope, $rootScope, $compile,NgMap) {
+  var MonitorCtrl = ['$scope', '$rootScope', '$compile','NgMap','socket','dataFactory', function ($scope, $rootScope, $compile,NgMap,socket,dataFactory) {
 
     var ctrl = this;
 
+      socket.forward('rank', $scope);
 
-    ctrl.rankData =[];
+    ctrl.rankData = dataFactory.getRankData();
 
     ctrl.possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -20,22 +21,18 @@
 
     ctrl.update = true;
 
-    for (var i = 0 ; i<10; i++){
-        var lamp = {location:{ gps_coordinate:{}}};
-        lamp.id = i+1;
-        lamp.model="";
-        lamp.model += ctrl.possible.charAt(Math.floor(Math.random() * ctrl.possible.length));
-        lamp.model += ctrl.possible.charAt(Math.floor(Math.random() * ctrl.possible.length));
-        lamp.location.address = ctrl.streets[i%2];
-        lamp.location.gps_coordinate.latitude = "10";
-        lamp.location.gps_coordinate.longitude = "10";
-        lamp.power_consumption = (Math.random()*100).toFixed(2);
-        lamp.light_intensity = (Math.random()*100).toFixed(2);
-        lamp.state_on = (i!== 0 && i !== 50 && i !==100);
-        lamp.substitution_date = ctrl.dates[i%4];
-        ctrl.rankData.push(lamp);
-    }
 
+      $scope.$on('socket:rank', function (ev, data) {
+          console.log(data.message);
+          dataFactory.setRankData(JSON.parse(data.message));
+          ctrl.rankData = dataFactory.getRankData();
+          console.log(ctrl.rankData);
+      });
+
+      $scope.$on('socket:error', function (ev, data) {
+          console.log("ev","data");
+
+      });
 
       NgMap.getMap().then(function(map) {
           console.log('map', map);
@@ -105,6 +102,8 @@
       };
 
 
+
+
       ctrl.dataset[0].data = getRandomData();
 
       function getRandomData() {
@@ -152,7 +151,7 @@
 
   }];
 
-  MonitorCtrl.$inject = ['$scope', '$rootScope', '$compile','NgMap'];
+  MonitorCtrl.$inject = ['$scope', '$rootScope', '$compile','NgMap','socket','dataFactory'];
 
   angular.module('monitoringDashboardApp').controller('MonitorCtrl', MonitorCtrl);
 

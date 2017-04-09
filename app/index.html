@@ -19,7 +19,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="styles/AdminLTE.css">
   <!-- endbuild -->
-
+  <script src="/socket.io/socket.io.js"></script>
 
 
 </head>
@@ -143,6 +143,7 @@
   <script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
   <script src="bower_components/angular-paging/dist/paging.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-socket-io/socket.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -150,6 +151,14 @@
   <!-- include: "type": "js", "files": ["scripts/modules/*.js"] -->
   <script src="/scripts/modules/app.js"></script>
   <script src="/scripts/modules/route.js"></script>
+  <!-- /include -->
+  <!-- endbuild -->
+
+
+  <!-- build:js({.tmp,app}) scripts/factories.js -->
+  <!-- include: "type": "js", "files": ["scripts/factories/*.js"] -->
+  <script src="/scripts/factories/socket.js"></script>
+  <script src="/scripts/factories/dataFactory.js"></script>
   <!-- /include -->
   <!-- endbuild -->
   <!-- build:js({.tmp,app}) scripts/controllers.js -->

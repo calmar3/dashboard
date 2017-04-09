@@ -1,9 +1,11 @@
 (function () {
   'use strict';
 
-  var ControlCtrl = ['$scope', '$rootScope', '$compile', function ($scope, $rootScope, $compile) {
+  var ControlCtrl = ['$scope', '$rootScope', '$compile','socket', function ($scope, $rootScope, $compile,socket) {
 
     var ctrl = this;
+
+
 
       ctrl.entries = [10,50,100,200];
 
@@ -32,6 +34,9 @@
       }, function(res) {
           ctrl.pagingAction(1,res);
       });
+
+
+
 
 
 
@@ -64,7 +69,7 @@
 
   }];
 
-  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile'];
+  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile','socketFactory'];
 
   angular.module('monitoringDashboardApp').controller('ControlCtrl', ControlCtrl);
 
