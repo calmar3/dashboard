@@ -49,30 +49,27 @@
         <div map-lazy-load="https://maps.google.com/maps/api/js">
 
 
-          <ng-map default-style="true" center="41.9100711,12.5359979" zoom="12">
-            <marker id='{{shop.id}}' position="{{shop.position}}"
-                    ng-repeat="shop in ctrl.shops"
-                    on-click="ctrl.showDetail(shop)">
+          <ng-map default-style="true" center="41.890841, 12.493261" zoom="15">
+            <marker  id='{{lamp.lampId}}' position="{{lamp.position}}"
+                    ng-repeat="lamp in ctrl.lamps"
+                    on-click="ctrl.showDetail(lamp)">
             </marker>
 
-            <info-window id="foo-iw">
+            <info-window id="foo-iw" >
               <div ng-non-bindable="">
-                id: {{ctrl.shop.id}}<br/>
-                name: {{ctrl.shop.name}}<br/>
-                Position 1: {{ctrl.shop.position}}<br/>
-                Position 2: {{anchor.getPosition()}}<br/>
-                Position 3: {{ctrl.map.markers[ctrl.shop.id].getPosition()}}<br/>
-                <a href="#" ng-click="ctrl.clicked()">Click Here</a>
+                id: {{ctrl.lamp.lampId}}<br/>
+                Address: {{ctrl.lamp.address}}<br/>
+                Position : {{ctrl.lamp.position}}<br/>
               </div>
             </info-window>
           </ng-map>
         </div>
       </div>
       <div class="box-footer">
-        <button class="btn btn-xs btn-flat btn-danger pull-right" ng-click="ctrl.showDetail(e, ctrl.shop)" style="margin-left:5px;">
+        <button class="btn btn-xs btn-flat btn-danger pull-right" ng-click="ctrl.showDetail(e, ctrl.lamp)" style="margin-left:5px;">
           Show
         </button>
-        <button class="btn btn-xs btn-flat btn-danger pull-right" ng-click="ctrl.hideDetail(e, ctrl.shop)">
+        <button class="btn btn-xs btn-flat btn-danger pull-right" ng-click="ctrl.hideDetail(e, ctrl.lamp)">
           Hide
         </button>
       </div>
@@ -84,55 +81,5 @@
 
 </div>
 
-<!--<div class="row">
-  <div class="col-lg-12">
-
-    <div class="box box-danger">
-      <div class="box-header with-border">
-        <div class="row">
-          <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
-            <i class="fa fa-area-chart"></i>
-            <h3 class="box-title">Real-Time Consumption Chart</h3>
-          </div>
-          <div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
-            <div class="box-tools pull-right">
-              Real time
-              <div class="btn-group" id="realtime" data-toggle="btn-toggle">
-                <button type="button" class="btn btn-default btn-xs " ng-class="{'active':ctrl.update}" ng-click="ctrl.switch()">On</button>
-                <button type="button" class="btn btn-default btn-xs" ng-class="{'active':!ctrl.update}" ng-click="ctrl.switch()">Off</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box-body">
-        <div style="height: 300px; padding: 0px; position: relative;">
-          <flot dataset="ctrl.dataset" options="ctrl.options"></flot>
-
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-</div>
-<div class="row">
-
-
-
-</div>
-
-<script>$('flot > div');</script>
-
-&lt;!&ndash; jQuery 2.2.3 &ndash;&gt;
-<script src="../../scripts/plugins/jQuery/jquery-2.2.3.min.js"></script>
-&lt;!&ndash; FLOT CHARTS &ndash;&gt;
-<script src="../../scripts/plugins/flot/jquery.flot.min.js"></script>
-&lt;!&ndash; FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized &ndash;&gt;
-<script src="../../scripts/plugins/flot/jquery.flot.resize.min.js"></script>
-&lt;!&ndash; FLOT PIE PLUGIN - also used to draw donut charts &ndash;&gt;
-<script src="../../scripts/plugins/flot/jquery.flot.pie.min.js"></script>
-&lt;!&ndash; FLOT CATEGORIES PLUGIN - Used to draw bar charts &ndash;&gt;
-<script src="../../scripts/plugins/flot/jquery.flot.categories.min.js"></script>-->
 
 

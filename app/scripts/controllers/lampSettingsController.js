@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var LampSettingsCtrl = ['$scope', '$rootScope', '$compile', function ($scope, $rootScope, $compile) {
+  var LampSettingsCtrl = ['$scope', '$rootScope', '$compile','$http','dataFactory', function ($scope, $rootScope, $compile,$http,dataFactory) {
 
     var ctrl = this;
 
@@ -13,13 +13,7 @@
 
       ctrl.show=10;
 
-      ctrl.data =[];
-
-      ctrl.possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-      ctrl.dates = ["25-12-2017","25-12-2016","25-12-2015","25-12-2014"];
-
-      ctrl.streets = [ "Via dei Fori Imperiali" , "Via di San Giovanni in Laterano"];
+      ctrl.data = dataFactory.getLampList();
 
       ctrl.pagingAction = pagingActionFn;
 
@@ -35,15 +29,99 @@
 
       ctrl.validateForm = validateFormFn;
 
-      ctrl.newLamp = { location:{
-        gps_coordinate:{
-        }
-      }};
+      ctrl.newLamp = {};
+
+      ctrl.deleteLamp = deleteLampFn;
+
+      ctrl.insertLamp = insertLampFn;
+
+      loadData();
+
+      function deleteLampFn() {
+          $http.delete(dataFactory.getHost()+'/api/lamp/'+ctrl.selected.lampId).then(function (response) {
+
+              loadData();
+              loadData();
+              ctrl.done = true;
+              setTimeout(function () {
+                  ctrl.done = null;
+                  ctrl.switchMode();
+              },500);
+
+          }).catch(function (error) {
+              console.log(error);
+              ctrl.updateError = true;
+              setTimeout(function () {
+                  ctrl.updateError = null;
+                  ctrl.switchMode();
+              },500);
+          });
+      }
+
+      function insertLampFn() {
+
+          if (!ctrl.validateForm()){
+              ctrl.formError = true;
+              setTimeout(function () {
+                  ctrl.formError = null;
+              },500);
+              return;
+          }
+          ctrl.newLamp.consumption = 0;
+          ctrl.newLamp.lightIntensity = 0;
+          ctrl.newLamp.stateOn = true;
+          ctrl.newLamp.timestamp = 0;
+          $http.post(dataFactory.getHost()+'/api/lamp',ctrl.newLamp).then(function (response) {
+
+              loadData();
+              ctrl.done = true;
+              setTimeout(function () {
+                  ctrl.done = null;
+                  ctrl.switchMode();
+              },500);
+
+
+          }).catch(function (error) {
+              console.log(error);
+              ctrl.updateError = true;
+              setTimeout(function () {
+                  ctrl.updateError = null;
+                  ctrl.switchMode();
+              },500);
+          });
+
+      }
+
+      function loadData() {
+          $http.get(dataFactory.getHost()+'/api/lamps').then(function (response) {
+
+              if (JSON.stringify(ctrl.data) !== JSON.stringify(response.data.lamps)){
+                  ctrl.data = response.data.lamps;
+              }
+              ctrl.dataset = ctrl.data.slice(0);
+          }).catch(function (error) {
+              console.log(error);
+          });
+      }
+
 
       function validateFormFn() {
-          if (ctrl.newLamp.id && ctrl.newLamp.model && ctrl.newLamp.location.gps_coordinate.latitude
-              && ctrl.newLamp.location.gps_coordinate.longitude)
+
+          if (isNaN(parseInt(ctrl.newLamp.lampId)))
+              return false;
+
+          for (var i = 0 ; i < ctrl.data.length ; i++){
+              if (parseInt(ctrl.newLamp.lampId) === parseInt(ctrl.data[i].lampId)){
+                  return false;
+              }
+          }
+          if (ctrl.newLamp.lampId && ctrl.newLamp.model && ctrl.newLamp.latitude
+              && ctrl.newLamp.longitude && ctrl.newLamp.address && ctrl.newLamp.city && ctrl.newLamp.lastSubstitutionDate
+          && ctrl.newLamp.cellId){
+
               return true;
+          }
+
           return false;
       }
 
@@ -51,10 +129,7 @@
           ctrl.mode = mode;
           if (!mode){
               ctrl.selected = null;
-              ctrl.newLamp = { location:{
-                  gps_coordinate:{
-                  }
-              }};
+              ctrl.newLamp = {};
           }
 
       }
@@ -86,25 +161,6 @@
       }
 
 
-      for (var i = 0 ; i<100; i++){
-          var lamp = {location:{ gps_coordinate:{}}};
-          lamp.id = i+1;
-          lamp.model="";
-          lamp.model += ctrl.possible.charAt(Math.floor(Math.random() * ctrl.possible.length));
-          lamp.model += ctrl.possible.charAt(Math.floor(Math.random() * ctrl.possible.length));
-          lamp.location.address = ctrl.streets[i%2];
-          lamp.location.gps_coordinate.latitude = "10";
-          lamp.location.gps_coordinate.longitude = "10";
-          lamp.power_consumption = (Math.random()*100).toFixed(2);
-          lamp.light_intensity = (Math.random()*100).toFixed(2);
-          lamp.state_on = (i!== 0 && i !== 50 && i !==100);
-          lamp.substitution_date = ctrl.dates[i%4];
-          ctrl.data.push(lamp);
-      }
-
-      ctrl.dataset = ctrl.data.slice(0);
-
-
       function searchFilterFn(item) {
 
           if (ctrl.searchText && !ctrl.searchText !== '') {
@@ -128,7 +184,7 @@
 
   }];
 
-  LampSettingsCtrl.$inject = ['$scope', '$rootScope', '$compile'];
+  LampSettingsCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','dataFactory'];
 
   angular.module('monitoringDashboardApp').controller('LampSettingsCtrl', LampSettingsCtrl);
 
