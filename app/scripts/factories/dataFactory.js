@@ -12,6 +12,8 @@
 
         dataFactory.lampList = [];
 
+        dataFactory.controList = [];
+
         dataFactory.host = "http://localhost:6008";
 
         dataFactory.setRankData = setRankDataFn;
@@ -24,6 +26,17 @@
 
         dataFactory.getHost = getHostFn;
 
+        dataFactory.getControList = getControlListFn;
+
+        dataFactory.setControList = setControlListFn;
+
+        function getControlListFn() {
+            return dataFactory.controList;
+        }
+
+        function setControlListFn(controlList) {
+            dataFactory.controList = controlList;
+        }
 
         function setRankDataFn(rankData) {
             dataFactory.rankData = rankData;

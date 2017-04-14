@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-lg-7 col-md-12 col-xs-12">
+  <div class="col-lg-6 col-md-12 col-xs-12">
   <div class="box box-danger">
     <div class="box-header with-border">
       <i class="fa fa-table"></i>
@@ -32,11 +32,75 @@
     <div class="box-footer">
     </div>
     </div>
+
   </div>
 
 
 
+        <div class="col-lg-6 col-md-12 col-xs-12">
+            <div class="box box-danger" >
+                <div class="box-header with-border">
+                    <i class="fa fa-warning "></i>
+                    <h3 class="box-title">Warning Faulty Lamps</h3>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-body" style="height: 45vh !important;
+                 overflow-y: scroll !important;">
+                    <div ng-repeat="warning in ctrl.warnings" class="alert alert-danger alert-dismissible" ng-show="!ctrl.clicked" style="margin-bottom: 5px; ">
+                        <button type="button" class="close " data-dismiss="alert" aria-hidden="true">×</button>
+                        <i class="icon fa fa-warning"></i>Detected Faulty Lamp {{warning.lampId}} - {{warning.address}}
+                    </div>
+                </div>
+                <div class="box-footer">
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+</div>
+<div class="row">
+
   <div class="col-lg-5 col-md-12 col-xs-12">
+
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <i class="fa fa-pie-chart"></i>
+
+        <h3 class="box-title">City Average Consumption</h3>
+
+      </div>
+      <div class="box-body">
+        <div class="row" >
+          <div class ="col-xs-4 col-md-4 ">
+          <div class="chart" style="height: 230px">
+            <pie-chart data="ctrl.hourCityCons" options="ctrl.pieChartOptions"></pie-chart>
+          </div>
+          </div>
+          <div class ="col-xs-4 col-md-4 ">
+            <div class="chart" style="height: 230px">
+              <pie-chart data="ctrl.dayCityCons" options="ctrl.pieChartOptions"></pie-chart>
+            </div>
+          </div>
+          <div class ="col-xs-4 col-md-4" style>
+            <div class="chart" style="height: 230px">
+              <pie-chart data="ctrl.weekCityCons" options="ctrl.pieChartOptions"></pie-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <div class="col-lg-7 col-md-12 col-xs-12">
 
     <div class="box box-danger">
       <div class="box-header with-border">
@@ -46,23 +110,30 @@
 
       </div>
       <div class="box-body">
+        <div ng-show="ctrl.showAlert" class="alert alert-warning alert-dismissible" ng-show="!ctrl.clicked">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <i class="icon fa fa-info"></i>Click on marker to see Lamp Consumption Details
+        </div>
         <div map-lazy-load="https://maps.google.com/maps/api/js">
 
 
           <ng-map default-style="true" center="41.890841, 12.493261" zoom="15">
             <marker  id='{{lamp.lampId}}' position="{{lamp.position}}"
-                    ng-repeat="lamp in ctrl.lamps"
-                    on-click="ctrl.showDetail(lamp)">
+                     ng-repeat="lamp in ctrl.lamps"
+                     on-click="ctrl.showDetail(lamp)">
             </marker>
 
             <info-window id="foo-iw" >
-              <div ng-non-bindable="">
-                id: {{ctrl.lamp.lampId}}<br/>
-                Address: {{ctrl.lamp.address}}<br/>
-                Position : {{ctrl.lamp.position}}<br/>
-              </div>
+                <div ng-non-bindable="">
+                    <b>Id:</b> {{ctrl.lamp.lampId}}<br/>
+                    <b>Address:</b> {{ctrl.lamp.address}}<br/>
+                    <b>Position:</b>  {{ctrl.map.markers[ctrl.lamp.lampId].getPosition()}}<br/>
+                    <b>Avg. Consumption [h]:</b> {{ctrl.lamp.consumption}}<br/>
+                    <b>Avg. Consumption [d]:</b> {{ctrl.lamp.consumption}}<br/>
+                    <b>Avg. Consumption [w]:</b> {{ctrl.lamp.consumption}}<br/>
+                </div>
             </info-window>
-          </ng-map>
+        </ng-map>
         </div>
       </div>
       <div class="box-footer">
@@ -77,9 +148,44 @@
 
 
   </div>
-
-
 </div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <i class="fa fa-globe"></i>
+                <h3 class="box-title">Street Consumption</h3>
+            </div>
+            <!-- /.box-header -->
 
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-condensed table-hover ">
+                        <thead>
+                        <tr>
+                            <th>Street</th>
+                            <th style="text-align: center">Consumption[h]</th>
+                            <th style="text-align: center">Consumption[d]</th>
+                            <th style="text-align: center">Consumption[w]</th>
+                            <th style="text-align: center">Median</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  ng-repeat="lamp in ctrl.rankData">
+                            <td>{{lamp.lampId}}</td>
+                            <td>{{lamp.address}}</td>
+                            <td style="text-align: center">{{lamp.consumption}}%</td>
+                            <td style="text-align: center">{{lamp.residualLifeTime}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="box-footer">
+            </div>
+        </div>
+
+    </div>
+</div>
 
 

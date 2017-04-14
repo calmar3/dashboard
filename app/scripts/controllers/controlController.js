@@ -1,25 +1,19 @@
 (function () {
   'use strict';
 
-  var ControlCtrl = ['$scope', '$rootScope', '$compile', function ($scope, $rootScope, $compile) {
+  var ControlCtrl = ['$scope', '$rootScope', '$compile'/*,'socket'*/,'dataFactory', function ($scope, $rootScope, $compile/*,socket*/,dataFactory) {
 
     var ctrl = this;
 
-      ctrl.entries = [10,50,100,200];
+      //socket.forward('rank', $scope);
 
-      ctrl.searchText="";
+      ctrl.entries = [10,50,100,200];
 
       ctrl.clicked = false;
 
       ctrl.show=10;
 
-      ctrl.data =[];
-
-      ctrl.possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-      ctrl.dates = ["25-12-2017","25-12-2016","25-12-2015","25-12-2014"];
-
-      ctrl.streets = [ "Via dei Fori Imperiali" , "Via di San Giovanni in Laterano"];
+      ctrl.data = dataFactory.getControList();
 
       ctrl.pagingAction = pagingActionFn;
 
@@ -33,6 +27,13 @@
           ctrl.pagingAction(1,res);
       });
 
+/*      $scope.$on('socket:rank', function (ev, data) {
+          console.log(data.message);
+          dataFactory.setControlList(JSON.parse(data.message));
+          ctrl.data = dataFactory.getControList();
+          console.log(ctrl.data);
+          ctrl.dataset = ctrl.data.slice(0);
+      });*/
 
 
       function pagingActionFn( page, pageSize) {
@@ -44,27 +45,12 @@
       }
 
 
-      for (var i = 0 ; i<100; i++){
-          var lamp = {location:{ gps_coordinate:{}}};
-          lamp.id = i+1;
-          lamp.model="";
-          lamp.model += ctrl.possible.charAt(Math.floor(Math.random() * ctrl.possible.length));
-          lamp.model += ctrl.possible.charAt(Math.floor(Math.random() * ctrl.possible.length));
-          lamp.location.address = ctrl.streets[i%2];
-          lamp.location.gps_coordinate.latitude = "10";
-          lamp.location.gps_coordinate.longitude = "10";
-          lamp.power_consumption = (Math.random()*100).toFixed(2);
-          lamp.light_intensity = (Math.random()*100).toFixed(2);
-          lamp.state_on = (i!== 0 && i !== 50 && i !==100);
-          lamp.substitution_date = ctrl.dates[i%4];
-          ctrl.data.push(lamp);
-      }
 
       ctrl.dataset = ctrl.data.slice(0);
 
   }];
 
-  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile'];
+  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile'/*,'socket'*/,'dataFactory'];
 
   angular.module('monitoringDashboardApp').controller('ControlCtrl', ControlCtrl);
 

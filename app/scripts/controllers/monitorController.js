@@ -25,11 +25,22 @@
 
     ctrl.lamps = [];
 
+      ctrl.lamp = ctrl.lampsList[0];
+
+    ctrl.showAlert = true;
+
+      ctrl.pieChartOptions = {thickness: 12, mode: "gauge", total: 100}; //pie-chart option
+      ctrl.hourCityCons =  [ {label: "Last Hour", value: 80, color: "#f39c12", suffix: "W"} ];
+      ctrl.dayCityCons =  [ {label: "Last Day", value: 80, color: "#f39c12", suffix: "W"} ];
+      ctrl.weekCityCons =  [ {label: "Last Week", value: 80, color: "#f39c12", suffix: "W"} ];
+
+
     if (ctrl.lampsList.length === 0){
         $http.get(dataFactory.getHost()+'/api/lamps').then(function (response) {
 
             if (JSON.stringify(ctrl.data) !== JSON.stringify(response.data.lamps)){
                 ctrl.lampsList = response.data.lamps;
+                dataFactory.setLampList(ctrl.lampsList);
             }
             composeList();
         }).catch(function (error) {
@@ -44,15 +55,18 @@
 
     function composeList() {
         for (var i = 0 ; i < ctrl.lampsList.length ; i++){
-            if (ctrl.lampsList[i].latitude !== '0' && ctrl.lampsList[i].longitude !== '0'){
-                ctrl.lampsList[i].position = [
+            if (ctrl.lampsList[i].latitude !== '0' && ctrl.lampsList[i].longitude !== '0' && ctrl.lampsList[i].lampId!=="2"){
+                var tempLamp = ctrl.lampsList[i];
+                tempLamp.position = [
                     parseFloat(ctrl.lampsList[i].latitude),
                     parseFloat(ctrl.lampsList[i].longitude)
-                ]
-                ctrl.lamps.push(ctrl.lampsList[i]);
+                ];
+                tempLamp.lampId = tempLamp.lampId.toString();
+                ctrl.lamps.push(tempLamp);
             }
         }
         ctrl.lamp = ctrl.lamps[0];
+        ctrl.warnings = ctrl.lamps.slice(0)
     }
 
 
@@ -176,14 +190,30 @@
 
       ctrl.showDetail = function(e, lamp) {
           ctrl.lamp = lamp;
-          ctrl.map.showInfoWindow('foo-iw', lamp.lampId);
+          console.log(ctrl.map);
+          console.log(ctrl.map.infoWindows['foo-iw'].anchor);
+          ctrl.showAlert = false;
+          ctrl.map.showInfoWindow('foo-iw', ctrl.lamp.lampId);
       };
 
       ctrl.hideDetail = function() {
           ctrl.map.hideInfoWindow('foo-iw');
       };
 
+/*      ctrl.shops = [
+          {id:'1', name: 'Via dei Fori Imperiali', position:[41.8933281,12.4848003]},
+          {id:'2', name: 'Via di San Giovanni in Laterano', position:[41.8889431,12.4959199]}
+      ];
+      ctrl.shop = ctrl.shops[0];
 
+      ctrl.showDetail2 = function(e, shop) {
+          ctrl.shop = shop;
+          ctrl.map.showInfoWindow('foo-iw', shop.id);
+      };
+
+      ctrl.hideDetail2 = function() {
+          ctrl.map.hideInfoWindow('foo-iw');
+      };*/
 
 
 

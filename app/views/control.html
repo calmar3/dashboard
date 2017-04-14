@@ -34,7 +34,7 @@
                                 <tbody>
                                 <tr style="cursor:default;" ng-repeat="lamp in ctrl.dataset |  limitTo: ctrl.show"  >
                                     <td>{{lamp.id}}</td>
-                                    <td>{{lamp.location.address}}, &lt;{{lamp.location.gps_coordinate.latitude}},{{lamp.location.gps_coordinate.longitude}}&gt;</td>
+                                    <td>{{lamp.location.address}}, &lt{{lamp.location.gps_coordinate.latitude}},{{lamp.location.gps_coordinate.longitude}}&gt</td>
                                     <td style="text-align: center">{{lamp.light_intensity}}%</td>
                                     <td style="text-align: center">{{lamp.substitution_date}}</td>
                                 </tr>
@@ -48,7 +48,6 @@
                 <div class="row">
                     <div class="col-lg-5 col-xs-12">
                         Showing {{ctrl.shift+1}} to {{ctrl.shift+ctrl.show}} of {{ctrl.data.length}} entries<br>
-                        {{ctrl.testData.id}},{{ctrl.testData.consumo}}
                     </div>
                     <div class="col-lg-7 col-xs-12">
                 <span class="pull-right">

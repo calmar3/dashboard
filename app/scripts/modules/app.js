@@ -20,5 +20,6 @@ angular
     'ngMap',
     'bw.paging',
       'ui.bootstrap',
-      'btford.socket-io'
+      'btford.socket-io',
+      'n3-pie-chart'
   ]);
