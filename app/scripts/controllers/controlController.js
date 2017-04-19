@@ -1,11 +1,11 @@
 (function () {
   'use strict';
 
-  var ControlCtrl = ['$scope', '$rootScope', '$compile'/*,'socket'*/,'dataFactory', function ($scope, $rootScope, $compile/*,socket*/,dataFactory) {
+  var ControlCtrl = ['$scope', '$rootScope', '$compile','socket','dataFactory', function ($scope, $rootScope, $compile,socket,dataFactory) {
 
     var ctrl = this;
 
-      //socket.forward('rank', $scope);
+      socket.forward('rank', $scope);
 
       ctrl.entries = [10,50,100,200];
 
@@ -27,13 +27,10 @@
           ctrl.pagingAction(1,res);
       });
 
-/*      $scope.$on('socket:rank', function (ev, data) {
+      $scope.$on('socket:rank', function (ev, data) {
           console.log(data.message);
-          dataFactory.setControlList(JSON.parse(data.message));
-          ctrl.data = dataFactory.getControList();
-          console.log(ctrl.data);
-          ctrl.dataset = ctrl.data.slice(0);
-      });*/
+
+      });
 
 
       function pagingActionFn( page, pageSize) {
@@ -50,7 +47,7 @@
 
   }];
 
-  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile'/*,'socket'*/,'dataFactory'];
+  ControlCtrl.$inject = ['$scope', '$rootScope', '$compile','socket','dataFactory'];
 
   angular.module('monitoringDashboardApp').controller('ControlCtrl', ControlCtrl);
 

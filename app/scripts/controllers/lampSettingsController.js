@@ -71,6 +71,7 @@
           ctrl.newLamp.lightIntensity = 0;
           ctrl.newLamp.stateOn = true;
           ctrl.newLamp.timestamp = 0;
+          ctrl.newLamp.residualLifeTime = 0;
           $http.post(dataFactory.getHost()+'/api/lamp',ctrl.newLamp).then(function (response) {
 
               loadData();
@@ -98,6 +99,8 @@
               if (JSON.stringify(ctrl.data) !== JSON.stringify(response.data.lamps)){
                   ctrl.data = response.data.lamps;
               }
+              dataFactory.setLampList(ctrl.data);
+
               ctrl.dataset = ctrl.data.slice(0);
           }).catch(function (error) {
               console.log(error);
@@ -116,8 +119,7 @@
               }
           }
           if (ctrl.newLamp.lampId && ctrl.newLamp.model && ctrl.newLamp.latitude
-              && ctrl.newLamp.longitude && ctrl.newLamp.address && ctrl.newLamp.city && ctrl.newLamp.lastSubstitutionDate
-          && ctrl.newLamp.cellId){
+              && ctrl.newLamp.longitude && ctrl.newLamp.address && ctrl.newLamp.city && ctrl.newLamp.lastSubstitutionDate){
 
               return true;
           }

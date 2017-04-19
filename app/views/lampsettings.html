@@ -18,7 +18,6 @@
                         <li><b>Light Intensity:</b> {{ctrl.selected.lightIntensity}}%</li>
                         <li><b>Substitution Date:</b> {{ctrl.selected.lastSubstitutionDate}}</li>
                         <li><b>State:</b> <span ng-if="ctrl.selected.state_on">On</span><span ng-if="!ctrl.selected.state_on">Off</span></li>
-                        <li><b>Cell:</b> {{ctrl.selected.cellId}}</li>
                       </ul>
                 </div>
             </div>
@@ -113,14 +112,6 @@
                                 </div>
                                 <div class="col-xs-10">
                                     <input type="text" class="form-control" placeholder="City"  ng-model="ctrl.newLamp.city">
-                                </div>
-                            </div><br><br>
-                            <div class="form-group">
-                                <div class="col-xs-2" style="height:34px; padding-top:1%; padding-right: 0px;">
-                                    <label class="control-label pull-right">Cell Id</label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <input type="text" class="form-control" placeholder="CellId"  ng-model="ctrl.newLamp.cellId">
                                 </div>
                             </div><br><br>
                             <div class="form-group">
@@ -221,7 +212,7 @@
                         <td>{{lamp.lampId}}</td>
                         <td>{{lamp.address}}, &lt;{{lamp.latitude}},{{lamp.longitude}}&gt;</td>
                         <td style="text-align: center">{{lamp.model}}</td>
-                        <td style="text-align: center">{{lamp.lastSubstitutionDate}}</td>
+                        <td style="text-align: center">{{lamp.lastSubstitutionDate | date:'dd/MM/yyyy '}}</td>
                     </tr>
                     </tbody>
                 </table>
