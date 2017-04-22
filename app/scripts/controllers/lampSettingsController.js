@@ -15,6 +15,8 @@
 
       ctrl.data = dataFactory.getLampList();
 
+      ctrl.dataset = ctrl.data.slice(0);
+
       ctrl.pagingAction = pagingActionFn;
 
       ctrl.searchFilter = searchFilterFn;
@@ -35,15 +37,20 @@
 
       ctrl.insertLamp = insertLampFn;
 
-      loadData();
+      ctrl.lastSubstitutionDateShow = null;
+
+      ctrl.currentPage = 1;
+
 
       function deleteLampFn() {
+
           $http.delete(dataFactory.getHost()+'/api/lamp/'+ctrl.selected.lampId).then(function (response) {
 
               loadData();
               loadData();
               ctrl.done = true;
               setTimeout(function () {
+                  console.log("all ok");
                   ctrl.done = null;
                   ctrl.switchMode();
               },500);
@@ -67,6 +74,13 @@
               },500);
               return;
           }
+          var str1 = ctrl.lastSubstitutionDateShow;
+          var dt1   = parseInt(str1.substring(0,2));
+          var mon1  = parseInt(str1.substring(3,5));
+          var yr1   = parseInt(str1.substring(6,10));
+          var date1 = new Date(yr1, mon1-1, dt1);
+          var d = date1.getTime();
+          ctrl.newLamp.lastSubstitutionDate = d;
           ctrl.newLamp.consumption = 0;
           ctrl.newLamp.lightIntensity = 0;
           ctrl.newLamp.stateOn = true;
@@ -93,20 +107,6 @@
 
       }
 
-      function loadData() {
-          $http.get(dataFactory.getHost()+'/api/lamps').then(function (response) {
-
-              if (JSON.stringify(ctrl.data) !== JSON.stringify(response.data.lamps)){
-                  ctrl.data = response.data.lamps;
-              }
-              dataFactory.setLampList(ctrl.data);
-
-              ctrl.dataset = ctrl.data.slice(0);
-          }).catch(function (error) {
-              console.log(error);
-          });
-      }
-
 
       function validateFormFn() {
 
@@ -119,7 +119,7 @@
               }
           }
           if (ctrl.newLamp.lampId && ctrl.newLamp.model && ctrl.newLamp.latitude
-              && ctrl.newLamp.longitude && ctrl.newLamp.address && ctrl.newLamp.city && ctrl.newLamp.lastSubstitutionDate){
+              && ctrl.newLamp.longitude && ctrl.newLamp.address && ctrl.newLamp.city && ctrl.lastSubstitutionDateShow){
 
               return true;
           }
@@ -132,8 +132,9 @@
           if (!mode){
               ctrl.selected = null;
               ctrl.newLamp = {};
+              ctrl.lastSubstitutionDateShow = null;
           }
-
+          ctrl.pagingAction(1,ctrl.show);
       }
 
       function selectFn(lamp) {
@@ -150,6 +151,13 @@
           return ctrl.show;
       }, function(res) {
           ctrl.pagingAction(1,res);
+      });
+
+      $scope.$watch(function() {
+          return dataFactory.lampList;
+      }, function(res) {
+          ctrl.data = dataFactory.getLamps().slice(0);
+          pagingActionFn(ctrl.currentPage,ctrl.show);
       });
 
 

@@ -8,6 +8,7 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/morris.js/morris.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
@@ -26,7 +27,7 @@
 
 </head>
 
-<body class="hold-transition skin-black sidebar-mini" ng-controller="NavbarCtrl as ctrl" ng-class="{'sidebar-collapse':ctrl.collapsemenu,'sidebar-open':ctrl.openmenu}">
+<body class="hold-transition skin-black sidebar-mini" ng-controller="NavbarCtrl as ctrl" ng-class="{'sidebar-collapse':ctrl.collapsemenu,'sidebar-open':ctrl.openmenu}" ng-init="ctrl.init()">
 
   <div class="wrapper">
 
@@ -146,10 +147,18 @@
   <script src="bower_components/angular-paging/dist/paging.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="bower_components/angular-socket-io/socket.js"></script>
+  <script src="bower_components/eve-raphael/eve.js"></script>
+  <script src="bower_components/raphael/raphael.min.js"></script>
+  <script src="bower_components/mocha/mocha.js"></script>
+  <script src="bower_components/morris.js/morris.js"></script>
+  <script src="bower_components/angular-morris/build/module/angular-morris/angular-morris.min.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
   <script src="scripts/lib/d3.js"></script>
   <script src="scripts/lib/pie-chart.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <!-- include: "type": "js", "files": ["scripts/modules/*.js"] -->
   <script src="/scripts/modules/app.js"></script>

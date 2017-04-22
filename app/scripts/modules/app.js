@@ -21,5 +21,6 @@ angular
     'bw.paging',
       'ui.bootstrap',
       'btford.socket-io',
-      'n3-pie-chart'
+      'n3-pie-chart',
+      'angular.morris'
   ]);

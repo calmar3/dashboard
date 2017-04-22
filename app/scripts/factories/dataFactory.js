@@ -18,6 +18,14 @@
 
         dataFactory.warnings = [];
 
+        dataFactory.lamps = [];
+
+        dataFactory.cityData = [
+             [ {label: "Last Hour", value: 0, color: "#f39c12", suffix: "W"} ],
+                [ {label: "Last Day", value: 0, color: "#f39c12", suffix: "W"} ],
+            [ {label: "Last Week", value: 0, color: "#f39c12", suffix: "W"} ]
+        ];
+
         dataFactory.host = "http://localhost:6008";
 
         dataFactory.setRankData = setRankDataFn;
@@ -41,6 +49,32 @@
         dataFactory.getWarnings = getWarningsFn;
 
         dataFactory.setWarnings = setWarningsFn;
+
+        dataFactory.getLamps = getLampsFn;
+
+        dataFactory.setLamps = setLampsFn;
+
+        dataFactory.setCityData = setCityDataFn;
+
+        dataFactory.getCityData = getCityDataFn;
+
+        function setCityDataFn(cityData) {
+            dataFactory.cityData = cityData.splice(0);
+        }
+
+        function getCityDataFn() {
+            return dataFactory.cityData;
+        }
+
+        function getLampsFn() {
+            return dataFactory.lamps;
+        }
+
+        function setLampsFn(lamps) {
+            dataFactory.lamps = lamps.slice(0);
+        }
+
+
 
         function getStreetDataFn() {
             return dataFactory.streetData;
