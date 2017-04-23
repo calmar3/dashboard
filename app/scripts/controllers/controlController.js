@@ -6,13 +6,13 @@
     var ctrl = this;
 
 
-      ctrl.entries = [10,50,100,200];
-
-      ctrl.clicked = false;
+      ctrl.entries = [10,50,100];
 
       ctrl.show=10;
 
       ctrl.data = dataFactory.getControList();
+
+      ctrl.dataset = ctrl.data.slice(0);
 
       ctrl.pagingAction = pagingActionFn;
 
@@ -20,10 +20,19 @@
 
       ctrl.dataset = [];
 
+      ctrl.currentPage=1;
+
       $scope.$watch(function() {
           return ctrl.show;
       }, function(res) {
           ctrl.pagingAction(1,res);
+      });
+
+      $scope.$watch(function() {
+          return dataFactory.controList;
+      }, function(res) {
+          ctrl.data = dataFactory.getControList().slice(0);
+          pagingActionFn(ctrl.currentPage,ctrl.show);
       });
 
 

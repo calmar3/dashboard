@@ -20,13 +20,26 @@
 
         ctrl.warnings = dataFactory.getWarnings();
 
+        ctrl.pieChartOptions = {thickness: 12, mode: "gauge", total: 100}; //pie-chart option
+
+        if (ctrl.cityData.length > 0 ){
+            var max = 0;
+            for (var i = 0 ; i < ctrl.cityData.length ; i++){
+                if (ctrl.cityData[i][0].value >= max){
+                    max = ctrl.cityData[i][0].value;
+                }
+            }
+            if (max > 100)
+                ctrl.pieChartOptions.total = Math.ceil(max);
+        }
+
         ctrl.lamps = [];
 
         ctrl.showAlert = true;
 
         ctrl.update = true;
 
-        ctrl.pieChartOptions = {thickness: 12, mode: "gauge", total: 100}; //pie-chart option
+
 
         ctrl.testOptions =
 
@@ -58,32 +71,44 @@
             return dataFactory.cityData;
         }, function(res) {
             ctrl.cityData = dataFactory.getCityData().slice(0);
-            console.log(JSON.stringify(ctrl.cityData));
+            if (ctrl.cityData.length > 0 ){
+                var max = 0;
+                for (var i = 0 ; i < ctrl.cityData.length ; i++){
+                    if (ctrl.cityData[i][0].value >= max){
+                        max = ctrl.cityData[i][0].value;
+                    }
+                }
+                if (max > 100)
+                    ctrl.pieChartOptions.total = Math.ceil(max);
+            }
         });
 
 
         $scope.$watch(function() {
             return dataFactory.warnings;
         }, function(res) {
-            ctrl.warnings = dataFactory.getWarnings();
+            ctrl.warnings = dataFactory.getWarnings().slice(0);
+
         });
 
         $scope.$watch(function() {
-            return dataFactory.lampList;
+            return dataFactory.lamps;
         }, function(res) {
-            ctrl.lamps = dataFactory.getLamps();
+            ctrl.lamps = dataFactory.getLamps().slice(0);
             if (!ctrl.lamp)
                 ctrl.lamp = ctrl.lamps[0];
+
         });
 
         $scope.$watch(function() {
             return dataFactory.rankData;
         }, function(res) {
-            ctrl.rankData = dataFactory.getRankData();
+            ctrl.rankData = dataFactory.getRankData().slice(0);
             if (!ctrl.interval){
                 ctrl.interval = true;
                 setTimeout(updateRank(),5000);
             }
+
         });
 
         $scope.$watch(function() {
@@ -110,7 +135,7 @@
             setInterval(function () {
                 for (var i = 0 ; i < ctrl.rankData.length ; i++){
 
-                    ctrl.rankData[i].residualLifeTime = ctrl.rankData[i].residualLifeTime + 10000;
+                    ctrl.rankData[i].residualLifeTime = ctrl.rankData[i].residualLifeTime + 1000;
                     var difference = ctrl.rankData[i].residualLifeTime;
                     ctrl.rankData[i].day = Math.floor(difference/1000/60/60/24);
                     difference -= ctrl.rankData[i].day*1000*60*60*24;
@@ -126,7 +151,7 @@
                 }
                 dataFactory.setRankData(ctrl.rankData);
                 $scope.$apply();
-            },10000);
+            },1000);
         }
 
 

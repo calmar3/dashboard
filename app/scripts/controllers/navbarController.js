@@ -1,11 +1,11 @@
 (function () {
   'use strict';
 
-    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','socket','dataFactory','$http', function ($scope, $rootScope, $compile, $state, $stateParams,socket,dataFactory,$http) {
+    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams'/*,'socket'*/,'dataFactory','$http', function ($scope, $rootScope, $compile, $state, $stateParams/*,socket*/,dataFactory,$http) {
 
         var ctrl = this;
 
-        socket.forward('rank', $scope);
+/*        socket.forward('rank', $scope);
         socket.forward('warning_hour', $scope);
         socket.forward('warning_day', $scope);
         socket.forward('warning_week', $scope);
@@ -23,6 +23,8 @@
         socket.forward('hour_city_cons', $scope);
         socket.forward('day_city_cons', $scope);
         socket.forward('week_city_cons', $scope);
+        socket.forward('adjustment_data', $scope);
+        */
 
 
         ctrl.collapsemenu = false;
@@ -49,7 +51,7 @@
         }
 
         function initFn() {
-            $http.get(dataFactory.getHost() + '/api/data').then(function (response) {
+            $http.get(dataFactory.getHost() + '/api/data').then(function (res) {
                 dataFactory.setLamps(res.data.lamps);
                 dataFactory.setControList(res.data.control);
                 dataFactory.setStreetData(res.data.streets);
@@ -143,12 +145,18 @@
         $scope.$on('socket:warning_hour', function (ev, data) {
             var temp = dataFactory.getWarnings();
             temp.splice(0,0,JSON.parse(data.message));
+            if (temp.length > 20 ){
+                temp.splice(20,temp.length -20)
+            }
             dataFactory.setWarnings(temp);
         });
 
         $scope.$on('socket:warning_day', function (ev, data) {
             var temp = dataFactory.getWarnings();
             temp.splice(0,0,JSON.parse(data.message));
+            if (temp.length > 20 ){
+                temp.splice(20,temp.length -20)
+            }
             dataFactory.setWarnings(temp);
         });
 
@@ -156,6 +164,9 @@
         $scope.$on('socket:warning_week', function (ev, data) {
             var temp = dataFactory.getWarnings();
             temp.splice(0,0,JSON.parse(data.message));
+            if (temp.length > 20 ){
+                temp.splice(20,temp.length -20)
+            }
             dataFactory.setWarnings(temp);
         });
 
@@ -255,7 +266,19 @@
         $scope.$on('socket:warning_state', function (ev, data) {
             var temp = dataFactory.getWarnings();
             temp.splice(0,0,JSON.parse(data.message));
+            if (temp.length > 20 ){
+                temp.splice(20,temp.length -20)
+            }
             dataFactory.setWarnings(temp);
+        });
+
+        $scope.$on('socket:adjustment_data', function (ev, data) {
+            var temp = dataFactory.getControList();
+            temp.splice(0,0,JSON.parse(data.message));
+            if (temp.length > 100 ){
+                temp.splice(100,temp.length -100)
+            }
+            dataFactory.setControList(temp);
         });
 
         $scope.$on('socket:median', function (ev, data) {
@@ -330,7 +353,7 @@
 
     }];
 
-    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','socket','dataFactory','$http'];
+    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams'/*,'socket'*/,'dataFactory','$http'];
 
     angular.module('monitoringDashboardApp').controller('NavbarCtrl', NavbarCtrl);
 } ());
