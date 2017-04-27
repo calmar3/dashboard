@@ -20,13 +20,19 @@
 
         dataFactory.lamps = [];
 
+        dataFactory.updateStreetData = 0;
+
+        dataFactory.updateLamps = 0;
+
+        dataFactory.updateCityData=0;
+
         dataFactory.cityData = [
              [ {label: "Last Hour", value: 0, color: "#f39c12", suffix: "W"} ],
                 [ {label: "Last Day", value: 0, color: "#f39c12", suffix: "W"} ],
             [ {label: "Last Week", value: 0, color: "#f39c12", suffix: "W"} ]
         ];
 
-        dataFactory.host = "http://localhost:6008";
+        dataFactory.host = "http://light-system.mybluemix.net";
 
         dataFactory.setRankData = setRankDataFn;
 
@@ -59,7 +65,8 @@
         dataFactory.getCityData = getCityDataFn;
 
         function setCityDataFn(cityData) {
-            dataFactory.cityData = cityData.splice(0);
+            dataFactory.updateCityData++;
+            dataFactory.cityData = cityData;
         }
 
         function getCityDataFn() {
@@ -71,7 +78,8 @@
         }
 
         function setLampsFn(lamps) {
-            dataFactory.lamps = lamps.slice(0);
+            dataFactory.updatelamps++;
+            dataFactory.lamps = lamps;
         }
 
 
@@ -81,7 +89,8 @@
         }
 
         function setStreetDataFn(streetData) {
-            dataFactory.streetData = streetData.slice(0);
+            dataFactory.updateStreetData++;
+            dataFactory.streetData = streetData;
         }
 
         function getControlListFn() {
@@ -89,11 +98,11 @@
         }
 
         function setControlListFn(controlList) {
-            dataFactory.controList = controlList.slice(0);
+            dataFactory.controList = controlList;
         }
 
         function setRankDataFn(rankData) {
-            dataFactory.rankData = rankData.slice(0);
+            dataFactory.rankData = rankData;
         }
 
         function getRankDataFn() {
@@ -101,7 +110,7 @@
         }
 
         function setLampListFn(lampList) {
-            dataFactory.lampList = lampList.slice(0);
+            dataFactory.lampList = lampList;
         }
 
         function getLampListFn() {

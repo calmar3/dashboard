@@ -45,7 +45,7 @@
 
         ctrl.interval = false;
 
-        ctrl.streetDataset = ctrl.streetData.slice(0);
+        ctrl.streetDataset = ctrl.streetData;
 
         ctrl.pagingAction = pagingActionFn;
 
@@ -61,16 +61,16 @@
         }
 
         $scope.$watch(function() {
-            return dataFactory.streetData;
+            return dataFactory.updateStreetData;
         }, function(res) {
-            ctrl.streetData = dataFactory.getStreetData().slice(0);
+            ctrl.streetData = dataFactory.getStreetData();
             ctrl.pagingAction(1,ctrl.show);
         });
 
         $scope.$watch(function() {
-            return dataFactory.cityData;
+            return dataFactory.updateCityData;
         }, function(res) {
-            ctrl.cityData = dataFactory.getCityData().slice(0);
+            ctrl.cityData = dataFactory.getCityData();
             if (ctrl.cityData.length > 0 ){
                 var max = 0;
                 for (var i = 0 ; i < ctrl.cityData.length ; i++){
@@ -87,14 +87,14 @@
         $scope.$watch(function() {
             return dataFactory.warnings;
         }, function(res) {
-            ctrl.warnings = dataFactory.getWarnings().slice(0);
+            ctrl.warnings = dataFactory.getWarnings();
 
         });
 
         $scope.$watch(function() {
-            return dataFactory.lamps;
+            return dataFactory.updateLamps;
         }, function(res) {
-            ctrl.lamps = dataFactory.getLamps().slice(0);
+            ctrl.lamps = dataFactory.getLamps();
             if (!ctrl.lamp)
                 ctrl.lamp = ctrl.lamps[0];
 
@@ -103,7 +103,7 @@
         $scope.$watch(function() {
             return dataFactory.rankData;
         }, function(res) {
-            ctrl.rankData = dataFactory.getRankData().slice(0);
+            ctrl.rankData = dataFactory.getRankData();
             if (!ctrl.interval){
                 ctrl.interval = true;
                 setTimeout(updateRank(),5000);

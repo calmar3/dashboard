@@ -156,7 +156,7 @@
       $scope.$watch(function() {
           return dataFactory.lampList;
       }, function(res) {
-          ctrl.data = dataFactory.getLamps().slice(0);
+          ctrl.data = dataFactory.getLampList().slice(0);
           pagingActionFn(ctrl.currentPage,ctrl.show);
       });
 

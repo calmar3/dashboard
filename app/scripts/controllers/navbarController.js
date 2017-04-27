@@ -1,11 +1,11 @@
 (function () {
   'use strict';
 
-    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams'/*,'socket'*/,'dataFactory','$http', function ($scope, $rootScope, $compile, $state, $stateParams/*,socket*/,dataFactory,$http) {
+    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','socket','dataFactory','$http', function ($scope, $rootScope, $compile, $state, $stateParams,socket,dataFactory,$http) {
 
         var ctrl = this;
 
-/*        socket.forward('rank', $scope);
+        socket.forward('rank', $scope);
         socket.forward('warning_hour', $scope);
         socket.forward('warning_day', $scope);
         socket.forward('warning_week', $scope);
@@ -24,7 +24,7 @@
         socket.forward('day_city_cons', $scope);
         socket.forward('week_city_cons', $scope);
         socket.forward('adjustment_data', $scope);
-        */
+
 
 
         ctrl.collapsemenu = false;
@@ -98,7 +98,7 @@
                     lamps.push(tempLamp);
                 }
             }
-            dataFactory.setLamps(lamps)
+            dataFactory.setLamps(lamps);
         }
 
         function composeStreets() {
@@ -120,7 +120,6 @@
         }
 
         $scope.$on('socket:rank', function (ev, data) {
-
             var temp = (JSON.parse(data.message));
 
             for (var i = 0 ; i < temp.length ; i++){
@@ -143,7 +142,10 @@
 
 
         $scope.$on('socket:warning_hour', function (ev, data) {
+
             var temp = dataFactory.getWarnings();
+            if (!temp)
+                temp = [];
             temp.splice(0,0,JSON.parse(data.message));
             if (temp.length > 20 ){
                 temp.splice(20,temp.length -20)
@@ -152,7 +154,10 @@
         });
 
         $scope.$on('socket:warning_day', function (ev, data) {
+
             var temp = dataFactory.getWarnings();
+            if (!temp)
+                temp = [];
             temp.splice(0,0,JSON.parse(data.message));
             if (temp.length > 20 ){
                 temp.splice(20,temp.length -20)
@@ -163,6 +168,8 @@
 
         $scope.$on('socket:warning_week', function (ev, data) {
             var temp = dataFactory.getWarnings();
+            if (!temp)
+                temp = [];
             temp.splice(0,0,JSON.parse(data.message));
             if (temp.length > 20 ){
                 temp.splice(20,temp.length -20)
@@ -172,7 +179,6 @@
 
 
         $scope.$on('socket:hour_lamp_cons', function (ev, data) {
-
             var lamps = dataFactory.getLampList();
             var temp = JSON.parse(data.message);
             for (var i = 0 ; i < lamps.length ; i++){
@@ -265,6 +271,8 @@
 
         $scope.$on('socket:warning_state', function (ev, data) {
             var temp = dataFactory.getWarnings();
+            if (!temp)
+                temp = [];
             temp.splice(0,0,JSON.parse(data.message));
             if (temp.length > 20 ){
                 temp.splice(20,temp.length -20)
@@ -274,6 +282,8 @@
 
         $scope.$on('socket:adjustment_data', function (ev, data) {
             var temp = dataFactory.getControList();
+            if (!temp)
+                temp = [];
             temp.splice(0,0,JSON.parse(data.message));
             if (temp.length > 100 ){
                 temp.splice(100,temp.length -100)
@@ -282,11 +292,12 @@
         });
 
         $scope.$on('socket:median', function (ev, data) {
+
             var temp = JSON.parse(data.message);
             var streetData = dataFactory.getStreetData();
             for (var i = 0 ; i < streetData.length ; i++){
-                if (streetData[i].address === temp.id){
-                    streetData[i].median = temp.consumption;
+                if (streetData[i].address === temp.f0){
+                    streetData[i].median = temp.f1;
                     break;
                 }
             }
@@ -325,7 +336,7 @@
                 rank:dataFactory.getRankData(),
                 warnings:dataFactory.getWarnings(),
                 city:dataFactory.getCityData()
-            }
+            };
             $http.post(dataFactory.getHost()+'/api/data',data).then(function (response) {
 
                 console.log("save success");
@@ -353,7 +364,7 @@
 
     }];
 
-    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams'/*,'socket'*/,'dataFactory','$http'];
+    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','socket','dataFactory','$http'];
 
     angular.module('monitoringDashboardApp').controller('NavbarCtrl', NavbarCtrl);
 } ());
