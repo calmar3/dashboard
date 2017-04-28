@@ -32,7 +32,7 @@
             [ {label: "Last Week", value: 0, color: "#f39c12", suffix: "W"} ]
         ];
 
-        dataFactory.host = "http://light-system.mybluemix.net";
+        dataFactory.host = "https://light-system.mybluemix.net";
 
         dataFactory.setRankData = setRankDataFn;
 
