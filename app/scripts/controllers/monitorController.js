@@ -12,6 +12,8 @@
 
         ctrl.show=10;
 
+        ctrl.lamps = [];
+
         ctrl.rankData = dataFactory.getRankData();
 
         ctrl.streetData = dataFactory.getStreetData();
@@ -19,6 +21,8 @@
         ctrl.cityData = dataFactory.getCityData();
 
         ctrl.warnings = dataFactory.getWarnings();
+
+        ctrl.lamps = dataFactory.getLamps();
 
         ctrl.pieChartOptions = {thickness: 12, mode: "gauge", total: 100}; //pie-chart option
 
@@ -33,13 +37,11 @@
                 ctrl.pieChartOptions.total = Math.ceil(max);
         }
 
-        ctrl.lamps = [];
+
 
         ctrl.showAlert = true;
 
         ctrl.update = true;
-
-
 
         ctrl.testOptions =
 

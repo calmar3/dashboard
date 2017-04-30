@@ -78,7 +78,7 @@
         }
 
         function setLampsFn(lamps) {
-            dataFactory.updatelamps++;
+            dataFactory.updateLamps++;
             dataFactory.lamps = lamps;
         }
 

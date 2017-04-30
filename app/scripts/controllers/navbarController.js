@@ -179,7 +179,7 @@
 
 
         $scope.$on('socket:hour_lamp_cons', function (ev, data) {
-            var lamps = dataFactory.getLampList();
+            var lamps = dataFactory.getLamps();
             var temp = JSON.parse(data.message);
             for (var i = 0 ; i < lamps.length ; i++){
                 if (parseInt(lamps[i].lampId) === temp.lampId){
@@ -187,32 +187,32 @@
                     break;
                 }
             }
-            dataFactory.setLampList(lamps);
+            dataFactory.setLamps(lamps);
         });
 
         $scope.$on('socket:day_lamp_cons', function (ev, data) {
             var temp = JSON.parse(data.message);
-            var lamps = dataFactory.getLampList();
+            var lamps = dataFactory.getLamps();
             for (var i = 0 ; i < lamps.length ; i++){
                 if (parseInt(lamps[i].lampId) === temp.lampId){
                     lamps[i].d_consumption = temp.consumption;
                     break;
                 }
             }
-            dataFactory.setLampList(lamps);
+            dataFactory.setLamps(lamps);
 
         });
 
         $scope.$on('socket:week_lamp_cons', function (ev, data) {
             var temp = JSON.parse(data.message);
-            var lamps = dataFactory.getLampList();
+            var lamps = dataFactory.getLamps();
             for (var i = 0 ; i < lamps.length ; i++){
                 if (parseInt(lamps[i].lampId) === temp.lampId){
                     lamps[i].w_consumption = temp.consumption;
                     break;
                 }
             }
-            dataFactory.setLampList(lamps);
+            dataFactory.setLamps(lamps);
         });
 
         $scope.$on('socket:hour_street_cons', function (ev, data) {
