@@ -174,10 +174,10 @@
       function searchFilterFn(item) {
 
           if (ctrl.searchText && !ctrl.searchText !== '') {
-              if (item.id.toString().toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
+              if (item.lampId.toString().toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
                   return true;
               }
-              else if (item.location.address.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
+              else if (item.address.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
                   return true;
               }
               else if(item.model.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1){
