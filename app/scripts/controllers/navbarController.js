@@ -1,3 +1,7 @@
+/**
+ * controller related to index.html
+ * Contains data to show in this view
+ */
 (function () {
   'use strict';
 
@@ -5,6 +9,9 @@
 
         var ctrl = this;
 
+        /**
+         * forward messages of this events from socket
+         */
         socket.forward('rank', $scope);
         socket.forward('warning_hour', $scope);
         socket.forward('warning_day', $scope);
@@ -50,6 +57,9 @@
             $state.go(location);
         }
 
+        /**
+         * get initial data from backend server
+         */
         function initFn() {
             $http.get(dataFactory.getHost() + '/api/data').then(function (res) {
                 dataFactory.setLamps(res.data.lamps);
@@ -84,6 +94,9 @@
             });
         }
 
+        /**
+         * compose lamps list to map in right way
+         */
         function composeList() {
             var lampsList = dataFactory.getLampList();
             var lamps = [];
@@ -101,6 +114,9 @@
             dataFactory.setLamps(lamps);
         }
 
+        /**
+         * compose streets list in right way to see in table
+         */
         function composeStreets() {
             var lampsList = dataFactory.getLampList();
             var streetData = [];
@@ -119,6 +135,9 @@
             dataFactory.setStreetData(streetData);
         }
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:rank', function (ev, data) {
             var temp = (JSON.parse(data.message));
 
@@ -140,7 +159,9 @@
             dataFactory.setRankData(temp);
         });
 
-
+        /**
+         * socket event
+         */
         $scope.$on('socket:warning_hour', function (ev, data) {
 
             var temp = dataFactory.getWarnings();
@@ -153,6 +174,9 @@
             dataFactory.setWarnings(temp);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:warning_day', function (ev, data) {
 
             var temp = dataFactory.getWarnings();
@@ -165,7 +189,9 @@
             dataFactory.setWarnings(temp);
         });
 
-
+        /**
+         * socket event
+         */
         $scope.$on('socket:warning_week', function (ev, data) {
             var temp = dataFactory.getWarnings();
             if (!temp)
@@ -177,7 +203,9 @@
             dataFactory.setWarnings(temp);
         });
 
-
+        /**
+         * socket event
+         */
         $scope.$on('socket:hour_lamp_cons', function (ev, data) {
             var lamps = dataFactory.getLamps();
             var temp = JSON.parse(data.message);
@@ -190,6 +218,9 @@
             dataFactory.setLamps(lamps);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:day_lamp_cons', function (ev, data) {
             var temp = JSON.parse(data.message);
             var lamps = dataFactory.getLamps();
@@ -203,6 +234,9 @@
 
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:week_lamp_cons', function (ev, data) {
             var temp = JSON.parse(data.message);
             var lamps = dataFactory.getLamps();
@@ -215,6 +249,9 @@
             dataFactory.setLamps(lamps);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:hour_street_cons', function (ev, data) {
             var temp = JSON.parse(data.message);
             var streetData = dataFactory.getStreetData();
@@ -232,6 +269,9 @@
             dataFactory.setStreetData(streetData);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:day_street_cons', function (ev, data) {
             var temp = JSON.parse(data.message);
             var streetData = dataFactory.getStreetData();
@@ -249,6 +289,9 @@
             dataFactory.setStreetData(streetData);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:week_street_cons', function (ev, data) {
             var temp = JSON.parse(data.message);
             var streetData = dataFactory.getStreetData();
@@ -268,7 +311,9 @@
 
 
 
-
+        /**
+         * socket event
+         */
         $scope.$on('socket:warning_state', function (ev, data) {
             var temp = dataFactory.getWarnings();
             if (!temp)
@@ -280,6 +325,9 @@
             dataFactory.setWarnings(temp);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:adjustment_data', function (ev, data) {
             var temp = dataFactory.getControList();
             if (!temp)
@@ -291,6 +339,9 @@
             dataFactory.setControList(temp);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:median', function (ev, data) {
 
             var temp = JSON.parse(data.message);
@@ -304,29 +355,45 @@
             dataFactory.setStreetData(streetData);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:hour_city_cons', function (ev, data) {
             var temp = dataFactory.getCityData();
             temp[0][0].value = parseFloat(data.message).toFixed(2);
             dataFactory.setCityData(temp);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:day_city_cons', function (ev, data) {
             var temp = dataFactory.getCityData();
             temp[1][0].value = parseFloat(data.message).toFixed(2);
             dataFactory.setCityData(temp);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:week_city_cons', function (ev, data) {
             var temp = dataFactory.getCityData();
             temp[2][0].value = parseFloat(data.message).toFixed(2);
             dataFactory.setCityData(temp);
         });
 
+        /**
+         * socket event
+         */
         $scope.$on('socket:error', function (ev, data) {
             console.log("ev","data");
 
         });
 
+
+        /**
+         * Store periodically data from view to database
+         */
         setInterval(function () {
 
             var data = {

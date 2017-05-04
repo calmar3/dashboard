@@ -1,5 +1,6 @@
-
-
+/**
+ * Service to get a socket linked with server
+ */
 
 (function() {
     'use strict';

@@ -1,3 +1,7 @@
+/**
+ * controller related to lampsettings.html
+ * Contains data to show in this view
+ */
 (function () {
   'use strict';
 
@@ -41,7 +45,9 @@
 
       ctrl.currentPage = 1;
 
-
+      /**
+       * REST API to delete lamp
+       */
       function deleteLampFn() {
 
           $http.delete(dataFactory.getHost()+'/api/lamp/'+ctrl.selected.lampId).then(function (response) {
@@ -65,6 +71,9 @@
           });
       }
 
+      /**
+       * REST API to insert new lamp
+       */
       function insertLampFn() {
 
           if (!ctrl.validateForm()){
@@ -147,12 +156,19 @@
             ctrl.selected = lamp;
       }
 
+
+      /**
+       * watch show variable changes to update the table layout with pagination
+       */
       $scope.$watch(function() {
           return ctrl.show;
       }, function(res) {
           ctrl.pagingAction(1,res);
       });
 
+      /**
+       * watch lamplist changes to update right ctrl variable
+       */
       $scope.$watch(function() {
           return dataFactory.lampList;
       }, function(res) {

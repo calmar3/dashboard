@@ -1,8 +1,12 @@
+/**
+ * controller related to monitor.html
+ * Contains data to show in this view
+ */
 (function () {
 
     'use strict';
 
-    var MonitorCtrl = ['$scope', '$rootScope', '$compile','NgMap','dataFactory','$http', function ($scope, $rootScope, $compile,NgMap,dataFactory,$http) {
+    var MonitorCtrl = ['$scope', '$rootScope', '$compile','NgMap','dataFactory', function ($scope, $rootScope, $compile,NgMap,dataFactory) {
 
         var ctrl = this;
 
@@ -62,6 +66,9 @@
             setTimeout(updateRank(),5000);
         }
 
+        /**
+         * watch streetData changes to update correct ctrl variable
+         */
         $scope.$watch(function() {
             return dataFactory.updateStreetData;
         }, function(res) {
@@ -69,6 +76,9 @@
             ctrl.pagingAction(1,ctrl.show);
         });
 
+        /**
+         * watch cityData changes to update correct ctrl variable
+         */
         $scope.$watch(function() {
             return dataFactory.updateCityData;
         }, function(res) {
@@ -85,7 +95,9 @@
             }
         });
 
-
+        /**
+         * watch warnings changes to update correct ctrl variable
+         */
         $scope.$watch(function() {
             return dataFactory.warnings;
         }, function(res) {
@@ -93,6 +105,9 @@
 
         });
 
+        /**
+         * watch lamps changes to update correct ctrl variable
+         */
         $scope.$watch(function() {
             return dataFactory.updateLamps;
         }, function(res) {
@@ -102,6 +117,9 @@
 
         });
 
+        /**
+         * watch rankData changes to update correct ctrl variable
+         */
         $scope.$watch(function() {
             return dataFactory.rankData;
         }, function(res) {
@@ -113,6 +131,9 @@
 
         });
 
+        /**
+         * watch show variable changes to update the table layout with pagination
+         */
         $scope.$watch(function() {
             return ctrl.show;
         }, function(res) {
@@ -132,7 +153,9 @@
             dataFactory.setWarnings(ctrl.warnings);
         }
 
-
+        /**
+         * timer in rank
+         */
         function updateRank() {
             setInterval(function () {
                 for (var i = 0 ; i < ctrl.rankData.length ; i++){
@@ -183,7 +206,7 @@
     }];
 
 
-  MonitorCtrl.$inject = ['$scope', '$rootScope', '$compile','NgMap','dataFactory','$http'];
+  MonitorCtrl.$inject = ['$scope', '$rootScope', '$compile','NgMap','dataFactory'];
 
   angular.module('monitoringDashboardApp').controller('MonitorCtrl', MonitorCtrl);
 

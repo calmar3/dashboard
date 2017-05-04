@@ -1,3 +1,8 @@
+/**
+ * controller related to control.html
+ * Contains data to show in this view
+ */
+
 (function () {
   'use strict';
 
@@ -22,12 +27,18 @@
 
       ctrl.currentPage=1;
 
+      /**
+       * watch show variable changes to update the table layout with pagination
+       */
       $scope.$watch(function() {
           return ctrl.show;
       }, function(res) {
           ctrl.pagingAction(1,res);
       });
 
+      /**
+       * watch control list changes to update right ctrl variable
+       */
       $scope.$watch(function() {
           return dataFactory.controList;
       }, function(res) {

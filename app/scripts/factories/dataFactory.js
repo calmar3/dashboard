@@ -1,5 +1,6 @@
 /**
- * Created by marco on 09/04/17.
+ * Service to store data to show in views, in the current session
+ *
  */
 (function() {
     'use strict';
