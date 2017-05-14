@@ -47,8 +47,6 @@
 
         ctrl.update = true;
 
-        ctrl.testOptions =
-
         ctrl.interval = false;
 
         ctrl.streetDataset = ctrl.streetData;
