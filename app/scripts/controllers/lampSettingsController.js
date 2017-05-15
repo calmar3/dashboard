@@ -53,7 +53,6 @@
           $http.delete(dataFactory.getHost()+'/api/lamp/'+ctrl.selected.lampId).then(function (response) {
 
               loadData();
-              loadData();
               ctrl.done = true;
               setTimeout(function () {
                   console.log("all ok");
@@ -205,7 +204,18 @@
           }else{
               return true;
           }
-      };
+      }
+
+      function loadData() {
+          $http.get(dataFactory.getHost() + '/api/lamps').then(function (response) {
+              var data = [];
+              if (JSON.stringify(data) !== JSON.stringify(response.data.lamps)) {
+                  data = response.data.lamps;
+              }
+              dataFactory.setLampList(data);
+          });
+      }
+
 
 
   }];
